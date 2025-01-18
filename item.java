@@ -1,22 +1,5 @@
-class Result {
-    private String message;
-    private int totalValue;
-
-    public Result(String message, int totalValue) {
-        this.message = message;
-        this.totalValue = totalValue;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public int getTotalValue() {
-        return totalValue;
-    }
-}
-
-public class item {
+// Класс Item с реализацией клонирования
+public class item implements Cloneable {
     private String name;
     private int value;
 
@@ -33,16 +16,12 @@ public class item {
         return value;
     }
 
-    public static Result analyzeItems(item[] items) {
-        int totalValue = 0;
-        StringBuilder names = new StringBuilder();
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone(); // Мелкое копирование
+    }
 
-        for (item item : items) {
-            totalValue += item.getValue();
-            names.append(item.getName()).append(", ");
-        }
-
-        String message = "Список предметов: " + names.toString();
-        return new Result(message, totalValue);
+    public item deepClone() {
+        return new item(this.name, this.value); // Глубокое копирование
     }
 }

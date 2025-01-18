@@ -1,14 +1,13 @@
-public class enemy {
-    private String name;
-    private int health;
+// Класс Enemy, наследующий GameEntity
+public class enemy extends GameEntity {
     private int attackPower;
 
     public enemy(String name, int health, int attackPower) {
-        this.name = name;
-        this.health = health;
+        super(name, health); // Вызов конструктора базового класса
         this.attackPower = attackPower;
     }
 
+    @Override
     public void printInfo() {
         System.out.println("Существо: " + name +
                            "\nЗдоровье: " + health +

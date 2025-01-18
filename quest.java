@@ -1,4 +1,5 @@
-public class quest {
+// Класс Quest, реализующий Interactable
+public class quest implements Interactable {
     private String title;
     private String description;
     private boolean isCompleted;
@@ -11,6 +12,11 @@ public class quest {
 
     public void complete() {
         isCompleted = true;
+    }
+
+    @Override
+    public void interact() {
+        System.out.println("Вы начали квест: " + title);
     }
 
     public void printInfo() {
