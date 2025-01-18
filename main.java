@@ -1,27 +1,53 @@
-// Главный класс для демонстрации
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 public class main {
     public static void main(String[] args) throws CloneNotSupportedException {
-        // Использование производного класса
-        SpecialAbility fireball = new SpecialAbility("Огненный шар", 50, 10, "Поджигает врагов");
-        fireball.printInfo();
-        fireball.printEffectOnly();
+        // Создаем список игровых объектов
+        List<GameEntity> entities = new ArrayList<>();
 
-        // Использование абстрактного класса
-        enemy goblin = new enemy("Гоблин", 30, 5);
-        goblin.printInfo();
+        // Добавляем объекты базового и производного классов
+        entities.add(new enemy("Гоблин", 30, 5));
+        entities.add(new enemy("Орк", 50, 10));
+        entities.add(new enemy("Дракон", 200, 50));
+        entities.add(new enemy("Волк", 20, 7));
 
-        // Использование интерфейса
-        quest mainQuest = new quest("Спасти деревню", "Отразить нападение бандитов");
-        mainQuest.interact();
-        mainQuest.printInfo();
+        // Выводим исходный список
+        System.out.println("Исходный список игровых объектов:");
+        for (GameEntity entity : entities) {
+            entity.printInfo();
+            System.out.println();
+        }
 
-        // Клонирование
-        item sword = new item("Меч", 100);
-        item shallowCopy = (item) sword.clone(); // Мелкое копирование
-        item deepCopy = sword.deepClone(); // Глубокое копирование
+        // Сортировка по здоровью
+        Collections.sort(entities, new Comparator<GameEntity>() {
+            @Override
+            public int compare(GameEntity e1, GameEntity e2) {
+                return Integer.compare(e1.health, e2.health);
+            }
+        });
 
-        System.out.println("Оригинал: " + sword.getName() + ", стоимость: " + sword.getValue());
-        System.out.println("Мелкая копия: " + shallowCopy.getName() + ", стоимость: " + shallowCopy.getValue());
-        System.out.println("Глубокая копия: " + deepCopy.getName() + ", стоимость: " + deepCopy.getValue());
+        // Вывод отсортированного списка
+        System.out.println("Список после сортировки по здоровью:");
+        for (GameEntity entity : entities) {
+            entity.printInfo();
+            System.out.println();
+        }
+
+        // Поиск объекта по имени
+        String searchName = "Орк";
+        GameEntity foundEntity = entities.stream()
+                                         .filter(entity -> entity.name.equals(searchName))
+                                         .findFirst()
+                                         .orElse(null);
+
+        if (foundEntity != null) {
+            System.out.println("Найден объект:");
+            foundEntity.printInfo();
+        } else {
+            System.out.println("Объект с именем \"" + searchName + "\" не найден.");
+        }
     }
 }
